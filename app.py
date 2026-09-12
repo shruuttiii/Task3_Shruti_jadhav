@@ -18,7 +18,7 @@ st.set_page_config(
 
 
 # ============================================================
-# PALETTE
+# COLOR PALETTE
 # ============================================================
 
 ALABASTER = "#EFE8DF"
@@ -27,13 +27,13 @@ MIDNIGHT = "#0F414A"
 LIGHT_BLUE = "#96C0CE"
 TAN = "#D8BA98"
 
-DARK_TEXT = "#243338"
-MUTED_TEXT = "#667477"
+TEXT = "#26383B"
+MUTED = "#667477"
 WHITE = "#FFFFFF"
 
 
 # ============================================================
-# CUSTOM UI
+# CUSTOM CSS
 # ============================================================
 
 st.markdown(
@@ -44,38 +44,29 @@ st.markdown(
 'https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap'
 );
 
-
-/* ==========================================================
-   GLOBAL
-   ========================================================== */
-
-html, body, [class*="css"] {{
+* {{
     font-family: 'DM Sans', sans-serif;
 }}
 
 .stApp {{
-
     background:
         radial-gradient(
-            circle at 0% 0%,
-            rgba(150, 192, 206, 0.25),
-            transparent 28%
-        ),
-
-        radial-gradient(
-            circle at 100% 10%,
-            rgba(216, 186, 152, 0.22),
+            circle at 5% 5%,
+            rgba(150, 192, 206, 0.28),
             transparent 25%
         ),
-
+        radial-gradient(
+            circle at 95% 10%,
+            rgba(216, 186, 152, 0.28),
+            transparent 25%
+        ),
         {ALABASTER};
-
-    color: {DARK_TEXT};
+    color: {TEXT};
 }}
 
 .block-container {{
-    max-width: 1220px;
-    padding-top: 1.5rem;
+    max-width: 1200px;
+    padding-top: 2rem;
     padding-bottom: 4rem;
 }}
 
@@ -84,131 +75,159 @@ header[data-testid="stHeader"] {{
 }}
 
 
-/* ==========================================================
+/* ------------------------------------------------------------
    HERO
-   ========================================================== */
+------------------------------------------------------------ */
 
-.hero {{
-    padding: 45px 20px 50px 20px;
-    text-align: center;
+.hero-container {{
+    background:
+        linear-gradient(
+            135deg,
+            {MIDNIGHT} 0%,
+            #174E59 55%,
+            #256675 100%
+        );
+
+    border-radius: 28px;
+
+    padding: 55px 50px;
+
+    margin-bottom: 35px;
+
+    box-shadow:
+        0 20px 45px rgba(15, 65, 74, 0.20);
+
+    position: relative;
+
+    overflow: hidden;
 }}
 
-.hero-badge {{
+.hero-container::after {{
+    content: "";
 
-    display: inline-block;
+    position: absolute;
 
-    padding: 8px 16px;
+    width: 250px;
+    height: 250px;
 
-    border-radius: 999px;
+    border-radius: 50%;
 
-    background: {LIGHT_BLUE};
+    background: rgba(216,186,152,0.16);
 
-    color: {MIDNIGHT};
+    right: -80px;
+    top: -90px;
+}}
 
-    font-size: 11px;
+.hero-container::before {{
+    content: "";
+
+    position: absolute;
+
+    width: 160px;
+    height: 160px;
+
+    border-radius: 50%;
+
+    background: rgba(150,192,206,0.13);
+
+    left: -60px;
+    bottom: -70px;
+}}
+
+.hero-content {{
+    position: relative;
+    z-index: 2;
+}}
+
+.hero-kicker {{
+    color: {TAN};
+
+    font-size: 12px;
 
     font-weight: 800;
 
-    letter-spacing: 1.5px;
+    letter-spacing: 2px;
 
-    margin-bottom: 20px;
+    margin-bottom: 15px;
 }}
 
 .hero-title {{
+    color: white;
 
     font-family: 'Playfair Display', serif;
 
-    font-size: 60px;
+    font-size: 54px;
 
     line-height: 1.05;
-
-    font-weight: 700;
-
-    color: {MIDNIGHT};
 
     margin: 0;
 }}
 
-.hero-title span {{
-    color: {MAROON};
+.hero-title-accent {{
+    color: {TAN};
 }}
 
-.hero-subtitle {{
+.hero-description {{
+    color: rgba(255,255,255,0.78);
 
-    max-width: 720px;
+    max-width: 680px;
 
-    margin: 20px auto 0 auto;
+    font-size: 15px;
 
-    color: {MUTED_TEXT};
+    line-height: 1.7;
 
-    font-size: 16px;
-
-    line-height: 1.75;
+    margin-top: 18px;
 }}
 
 
-/* ==========================================================
-   SECTION TITLES
-   ========================================================== */
+/* ------------------------------------------------------------
+   SECTION HEADERS
+------------------------------------------------------------ */
 
-.section-title {{
-
+.section-header {{
     font-family: 'Playfair Display', serif;
 
-    font-size: 29px;
-
-    font-weight: 700;
+    font-size: 30px;
 
     color: {MIDNIGHT};
 
-    margin-top: 25px;
+    font-weight: 700;
+
+    margin-top: 28px;
 
     margin-bottom: 5px;
 }}
 
-.section-subtitle {{
-
-    color: {MUTED_TEXT};
+.section-description {{
+    color: {MUTED};
 
     font-size: 14px;
 
-    margin-bottom: 20px;
+    margin-bottom: 18px;
 }}
 
 
-/* ==========================================================
-   CONTAINERS / CARDS
-   ========================================================== */
+/* ------------------------------------------------------------
+   CONTAINERS
+------------------------------------------------------------ */
 
 [data-testid="stVerticalBlockBorderWrapper"] {{
+    background: rgba(255,255,255,0.72);
 
-    background: rgba(255,255,255,0.75);
-
-    border: 1px solid rgba(15,65,74,0.12) !important;
+    border: 1px solid rgba(15,65,74,0.13) !important;
 
     border-radius: 20px !important;
 
     box-shadow:
-        0 10px 30px rgba(15,65,74,0.07);
-
-    transition: all 0.2s ease;
-}}
-
-[data-testid="stVerticalBlockBorderWrapper"]:hover {{
-
-    box-shadow:
-        0 15px 38px rgba(15,65,74,0.12);
-
-    transform: translateY(-1px);
+        0 8px 25px rgba(15,65,74,0.07);
 }}
 
 
-/* ==========================================================
+/* ------------------------------------------------------------
    INPUTS
-   ========================================================== */
+------------------------------------------------------------ */
 
 label {{
-
     color: {MIDNIGHT} !important;
 
     font-weight: 700 !important;
@@ -216,221 +235,106 @@ label {{
 
 .stTextInput input,
 .stNumberInput input {{
+    background: white !important;
 
-    background: {WHITE} !important;
+    color: {TEXT} !important;
 
-    border: 1px solid #d6d2cc !important;
+    border: 1px solid #d5d0ca !important;
 
     border-radius: 12px !important;
-
-    color: {DARK_TEXT} !important;
 }}
 
 .stSelectbox div[data-baseweb="select"],
 .stMultiSelect div[data-baseweb="select"] {{
-
-    background: {WHITE} !important;
-
-    border: 1px solid #d6d2cc !important;
+    background: white !important;
 
     border-radius: 12px !important;
 
-    color: {DARK_TEXT} !important;
+    border: 1px solid #d5d0ca !important;
 }}
 
-
-/* Multiselect tags */
-
 .stMultiSelect span[data-baseweb="tag"] {{
-
     background: {LIGHT_BLUE} !important;
-
-    border: none !important;
 
     color: {MIDNIGHT} !important;
 
-    font-weight: 600;
+    border: none !important;
+
+    font-weight: 700;
 }}
 
 
-/* ==========================================================
-   MAIN BUTTON
-   ========================================================== */
+/* ------------------------------------------------------------
+   BUTTON
+------------------------------------------------------------ */
 
 .stButton > button {{
+    background:
+        linear-gradient(
+            100deg,
+            {MAROON},
+            #9B1D1D
+        );
 
-    width: 100%;
+    color: white;
 
     border: none;
 
     border-radius: 13px;
 
-    padding: 15px 22px;
-
-    background:
-        linear-gradient(
-            100deg,
-            {MAROON},
-            #9d1b1b
-        );
-
-    color: white;
+    padding: 15px 20px;
 
     font-size: 15px;
 
     font-weight: 800;
 
     box-shadow:
-        0 12px 25px rgba(127,3,3,0.20);
+        0 10px 25px rgba(127,3,3,0.22);
 
     transition: all 0.25s ease;
 }}
 
 .stButton > button:hover {{
-
-    background:
-        linear-gradient(
-            100deg,
-            #650000,
-            {MAROON}
-        );
-
     transform: translateY(-2px);
 
     box-shadow:
-        0 16px 30px rgba(127,3,3,0.28);
+        0 15px 30px rgba(127,3,3,0.30);
 }}
 
 
-/* ==========================================================
-   SKILL CHIPS
-   ========================================================== */
-
-.skill-chip {{
-
-    display: inline-block;
-
-    padding: 7px 13px;
-
-    margin: 4px 5px 4px 0;
-
-    border-radius: 999px;
-
-    background: {LIGHT_BLUE};
-
-    color: {MIDNIGHT};
-
-    font-size: 12px;
-
-    font-weight: 700;
-}}
-
-.missing-chip {{
-
-    display: inline-block;
-
-    padding: 7px 13px;
-
-    margin: 4px 5px 4px 0;
-
-    border-radius: 999px;
-
-    background: {TAN};
-
-    color: {MAROON};
-
-    font-size: 12px;
-
-    font-weight: 700;
-}}
-
-
-/* ==========================================================
-   JOB TITLES
-   ========================================================== */
-
-.job-title {{
-
-    font-size: 20px;
-
-    font-weight: 800;
-
-    color: {MIDNIGHT};
-}}
-
-.company-name {{
-
-    color: {MAROON};
-
-    font-size: 14px;
-
-    margin-top: 4px;
-
-    font-weight: 700;
-}}
-
-.score {{
-
-    font-size: 30px;
-
-    font-weight: 800;
-
-    color: {MAROON};
-}}
-
-.small-label {{
-
-    color: {MUTED_TEXT};
-
-    font-size: 10px;
-
-    text-transform: uppercase;
-
-    letter-spacing: 1.3px;
-
-    font-weight: 800;
-}}
-
-
-/* ==========================================================
+/* ------------------------------------------------------------
    METRICS
-   ========================================================== */
+------------------------------------------------------------ */
 
 [data-testid="stMetric"] {{
-
-    background: rgba(255,255,255,0.78);
+    background: rgba(255,255,255,0.72);
 
     border: 1px solid rgba(15,65,74,0.12);
 
-    border-radius: 16px;
+    border-radius: 17px;
 
     padding: 18px;
 
     box-shadow:
-        0 7px 22px rgba(15,65,74,0.06);
+        0 7px 20px rgba(15,65,74,0.06);
 }}
 
 [data-testid="stMetricLabel"] {{
-
-    color: {MUTED_TEXT} !important;
-
-    font-size: 12px !important;
+    color: {MUTED} !important;
 }}
 
 [data-testid="stMetricValue"] {{
-
     color: {MIDNIGHT} !important;
 
     font-weight: 800 !important;
 }}
 
 
-/* ==========================================================
-   PROGRESS BAR
-   ========================================================== */
+/* ------------------------------------------------------------
+   PROGRESS
+------------------------------------------------------------ */
 
 .stProgress > div > div > div > div {{
-
     background:
         linear-gradient(
             90deg,
@@ -441,36 +345,112 @@ label {{
 }}
 
 
-/* ==========================================================
-   EXPANDERS
-   ========================================================== */
+/* ------------------------------------------------------------
+   JOB CARD
+------------------------------------------------------------ */
 
-[data-testid="stExpander"] {{
+.job-number {{
+    color: {MAROON};
 
-    border-color: rgba(15,65,74,0.14) !important;
+    font-size: 12px;
 
-    background: rgba(255,255,255,0.45);
+    font-weight: 800;
+
+    letter-spacing: 1px;
 }}
 
-.streamlit-expanderHeader {{
+.job-title {{
+    color: {MIDNIGHT};
 
-    color: {MIDNIGHT} !important;
+    font-size: 21px;
+
+    font-weight: 800;
+
+    margin-top: 4px;
+}}
+
+.company {{
+    color: {MAROON};
+
+    font-size: 14px;
+
+    font-weight: 700;
+}}
+
+.match-score {{
+    color: {MAROON};
+
+    font-size: 30px;
+
+    font-weight: 800;
+
+    text-align: right;
+}}
+
+.match-label {{
+    color: {MUTED};
+
+    font-size: 10px;
+
+    font-weight: 800;
+
+    letter-spacing: 1px;
+
+    text-align: right;
+}}
+
+
+/* ------------------------------------------------------------
+   CHIPS
+------------------------------------------------------------ */
+
+.skill-chip {{
+    display: inline-block;
+
+    background: {LIGHT_BLUE};
+
+    color: {MIDNIGHT};
+
+    border-radius: 999px;
+
+    padding: 6px 12px;
+
+    margin: 3px 4px 3px 0;
+
+    font-size: 11px;
+
+    font-weight: 700;
+}}
+
+.missing-chip {{
+    display: inline-block;
+
+    background: {TAN};
+
+    color: {MAROON};
+
+    border-radius: 999px;
+
+    padding: 6px 12px;
+
+    margin: 3px 4px 3px 0;
+
+    font-size: 11px;
 
     font-weight: 700;
 }}
 
 
-/* ==========================================================
-   CAREER INSIGHT
-   ========================================================== */
+/* ------------------------------------------------------------
+   INSIGHT
+------------------------------------------------------------ */
 
-.insight-box {{
-
+.insight {{
     background:
         linear-gradient(
             135deg,
-            rgba(150,192,206,0.42),
-            rgba(216,186,152,0.35)
+            rgba(150,192,206,0.30),
+            rgba(216,186,152,0.32)
         );
 
     border-left: 5px solid {MAROON};
@@ -478,29 +458,17 @@ label {{
     border-radius: 15px;
 
     padding: 20px;
-
-    color: {MIDNIGHT};
-}}
-
-.insight-title {{
-
-    color: {MAROON};
-
-    font-size: 16px;
-
-    font-weight: 800;
 }}
 
 
-/* ==========================================================
+/* ------------------------------------------------------------
    FORMULA
-   ========================================================== */
+------------------------------------------------------------ */
 
-.formula-box {{
-
+.formula {{
     background: {MIDNIGHT};
 
-    color: #f8f4ef;
+    color: white;
 
     border-radius: 18px;
 
@@ -509,37 +477,27 @@ label {{
     line-height: 2;
 }}
 
-.formula-box strong {{
+.formula strong {{
     color: {TAN};
 }}
 
 
-/* ==========================================================
+/* ------------------------------------------------------------
    FOOTER
-   ========================================================== */
+------------------------------------------------------------ */
 
 .footer {{
-
     text-align: center;
 
-    padding: 45px 0 10px 0;
-
-    color: #8b9292;
+    color: #7C8585;
 
     font-size: 12px;
+
+    padding-top: 45px;
 }}
 
 .footer strong {{
     color: {MIDNIGHT};
-}}
-
-
-/* ==========================================================
-   DIVIDER
-   ========================================================== */
-
-hr {{
-    border-color: rgba(15,65,74,0.13) !important;
 }}
 
 </style>
@@ -549,7 +507,7 @@ hr {{
 
 
 # ============================================================
-# LOAD MODEL FILES
+# LOAD MODEL
 # ============================================================
 
 @st.cache_resource
@@ -575,7 +533,7 @@ try:
 except Exception as e:
 
     st.error(
-        "The recommendation model files could not be loaded."
+        "Could not load the recommendation model."
     )
 
     st.code(str(e))
@@ -616,10 +574,9 @@ def get_skill_match(
 
 
 # ============================================================
-# RECOMMENDATION ENGINE
+# RECOMMENDATION MODEL
 # ============================================================
-# IMPORTANT:
-# THIS IS THE SAME MODEL LOGIC AS BEFORE.
+# EXACT SAME MODEL LOGIC
 # ============================================================
 
 def recommend_jobs(
@@ -674,10 +631,6 @@ def recommend_jobs(
     results["Salary Score"] = (
         results["Salary"] / min_salary
     ).clip(upper=1)
-
-    # ========================================================
-    # SAME FINAL SCORE
-    # ========================================================
 
     results["Final Score"] = (
 
@@ -765,10 +718,10 @@ def recommend_jobs(
 
 
 # ============================================================
-# SKILL CHIP DISPLAY
+# CHIP FUNCTION
 # ============================================================
 
-def skill_chips(
+def display_chips(
     skills,
     missing=False
 ):
@@ -787,18 +740,20 @@ def skill_chips(
         else "skill-chip"
     )
 
-    chips = ""
+    html = ""
 
     for skill in skills:
 
-        chips += (
+        html += (
             f'<span class="{css_class}">'
             f'{skill.title()}'
             f'</span>'
         )
 
+    # IMPORTANT:
+    # No indentation before HTML.
     st.markdown(
-        chips,
+        html,
         unsafe_allow_html=True
     )
 
@@ -808,24 +763,25 @@ def skill_chips(
 # ============================================================
 
 st.markdown(
-    """
-<div class="hero">
+    f"""
+<div class="hero-container">
+<div class="hero-content">
 
-    <div class="hero-badge">
-        ✦ AI-POWERED CAREER INTELLIGENCE
-    </div>
+<div class="hero-kicker">
+✦ AI-POWERED CAREER INTELLIGENCE
+</div>
 
-    <div class="hero-title">
-        Find work that <span>fits you.</span>
-    </div>
+<div class="hero-title">
+Find work that <span class="hero-title-accent">fits you.</span>
+</div>
 
-    <div class="hero-subtitle">
-        AI Career Navigator analyzes your skills,
-        experience, industry interests, location and
-        salary preferences to discover personalized
-        career opportunities.
-    </div>
+<div class="hero-description">
+AI Career Navigator analyzes your skills, experience,
+industry interests, location and salary preferences
+to discover personalized career opportunities.
+</div>
 
+</div>
 </div>
 """,
     unsafe_allow_html=True
@@ -833,62 +789,60 @@ st.markdown(
 
 
 # ============================================================
-# PROFILE
+# PROFILE SECTION
 # ============================================================
 
 st.markdown(
-    '<div class="section-title">'
-    'Build your career profile'
-    '</div>',
+    '<div class="section-header">Build your career profile</div>',
     unsafe_allow_html=True
 )
 
 st.markdown(
-    '<div class="section-subtitle">'
-    'Tell us what you are looking for. '
-    'Our recommendation engine will do the matching.'
+    '<div class="section-description">'
+    'Tell us what you are looking for and let the recommendation '
+    'engine find your strongest matches.'
     '</div>',
     unsafe_allow_html=True
 )
 
 
-with st.container(
-    border=True
-):
+with st.container(border=True):
 
-    col1, col2 = st.columns(
+    left, right = st.columns(
         2,
         gap="large"
     )
 
-    with col1:
+
+    with left:
+
+        skill_options = sorted(
+            list(
+                vectorizer
+                .get_feature_names_out()
+            )
+        )
+
+        default_skills = [
+            skill
+            for skill in [
+                "python",
+                "sql",
+                "machine learning"
+            ]
+            if skill in skill_options
+        ]
 
         skills_input = st.multiselect(
             "Your Skills",
-
-            options=sorted(
-                list(
-                    vectorizer
-                    .get_feature_names_out()
-                )
-            ),
-
-            default=[
-                skill
-                for skill in [
-                    "python",
-                    "sql",
-                    "machine learning"
-                ]
-                if skill in
-                vectorizer
-                .get_feature_names_out()
-            ]
+            options=skill_options,
+            default=default_skills,
+            placeholder="Select your skills..."
         )
+
 
         experience = st.selectbox(
             "Experience Level",
-
             sorted(
                 df_model[
                     "Experience Level"
@@ -898,9 +852,9 @@ with st.container(
             )
         )
 
+
         industry = st.selectbox(
             "Preferred Industry",
-
             sorted(
                 df_model[
                     "Industry"
@@ -910,11 +864,11 @@ with st.container(
             )
         )
 
-    with col2:
+
+    with right:
 
         location = st.selectbox(
             "Preferred Location",
-
             sorted(
                 df_model[
                     "Location"
@@ -924,41 +878,34 @@ with st.container(
             )
         )
 
+
         min_salary = st.number_input(
             "Minimum Salary Preference",
-
             min_value=0,
-
             value=80000,
-
             step=5000
         )
 
+
         top_n = st.slider(
-            "Recommendations to show",
-
+            "Number of Recommendations",
             min_value=3,
-
             max_value=15,
-
             value=10
         )
 
 
 # ============================================================
-# CURRENT SKILLS
+# SELECTED SKILLS
 # ============================================================
 
 if skills_input:
 
-    st.markdown(
-        '<div class="small-label">'
-        'YOUR CURRENT SKILLS'
-        '</div>',
-        unsafe_allow_html=True
+    st.caption(
+        "YOUR CURRENT SKILLS"
     )
 
-    skill_chips(
+    display_chips(
         skills_input
     )
 
@@ -967,13 +914,20 @@ st.write("")
 
 
 # ============================================================
-# RECOMMENDATION BUTTON
+# BUTTON
 # ============================================================
 
-if st.button(
+find_matches = st.button(
     "✦ Discover My Career Matches",
     use_container_width=True
-):
+)
+
+
+# ============================================================
+# RECOMMENDATIONS
+# ============================================================
+
+if find_matches:
 
     if not skills_input:
 
@@ -1008,46 +962,48 @@ if st.button(
 
 
     # ========================================================
-    # OVERVIEW
+    # RESULTS HEADER
     # ========================================================
 
     st.markdown("---")
 
     st.markdown(
-        '<div class="section-title">'
+        '<div class="section-header">'
         'Your career matches'
         '</div>',
         unsafe_allow_html=True
     )
 
     st.markdown(
-        '<div class="section-subtitle">'
-        'Your profile has been compared against '
-        'the available opportunities.'
+        '<div class="section-description">'
+        'Opportunities ranked from highest to lowest '
+        'personalized match.'
         '</div>',
         unsafe_allow_html=True
     )
 
 
+    # ========================================================
+    # METRICS
+    # ========================================================
+
     avg_score = (
         recommendations[
             "Final Score"
-        ].mean()
-        * 100
+        ].mean() * 100
     )
 
     best_score = (
         recommendations[
             "Final Score"
-        ].max()
-        * 100
+        ].max() * 100
     )
 
-    matching_jobs = len(
+    job_count = len(
         recommendations
     )
 
-    unique_companies = (
+    company_count = (
         recommendations[
             "Company"
         ].nunique()
@@ -1061,7 +1017,7 @@ if st.button(
 
         st.metric(
             "Jobs matched",
-            matching_jobs
+            job_count
         )
 
 
@@ -1085,16 +1041,16 @@ if st.button(
 
         st.metric(
             "Companies",
-            unique_companies
+            company_count
         )
 
 
     # ========================================================
-    # TOP MATCH
+    # BEST MATCH
     # ========================================================
 
     st.markdown(
-        '<div class="section-title">'
+        '<div class="section-header">'
         '✦ Best match for you'
         '</div>',
         unsafe_allow_html=True
@@ -1104,15 +1060,14 @@ if st.button(
     best_job = recommendations.iloc[0]
 
 
-    with st.container(
-        border=True
-    ):
+    with st.container(border=True):
 
-        top_left, top_right = st.columns(
+        a, b = st.columns(
             [4, 1]
         )
 
-        with top_left:
+
+        with a:
 
             st.markdown(
                 f'<div class="job-title">'
@@ -1122,33 +1077,35 @@ if st.button(
             )
 
             st.markdown(
-                f'<div class="company-name">'
+                f'<div class="company">'
                 f'{best_job["Company"]}'
                 f'</div>',
                 unsafe_allow_html=True
             )
 
             st.write(
-                f'📍 {best_job["Location"]}   '
-                f'•   💼 {best_job["Experience"]}   '
-                f'•   🏢 {best_job["Industry"]}'
+                f'📍 {best_job["Location"]}  '
+                f'•  💼 {best_job["Experience"]}  '
+                f'•  🏢 {best_job["Industry"]}'
             )
 
-        with top_right:
+
+        with b:
 
             st.markdown(
-                '<div class="small-label">'
+                '<div class="match-label">'
                 'MATCH SCORE'
                 '</div>',
                 unsafe_allow_html=True
             )
 
             st.markdown(
-                f'<div class="score">'
+                f'<div class="match-score">'
                 f'{best_job["Final Score"] * 100:.1f}%'
                 f'</div>',
                 unsafe_allow_html=True
             )
+
 
         st.progress(
             float(
@@ -1158,19 +1115,12 @@ if st.button(
 
 
     # ========================================================
-    # RECOMMENDED JOBS
+    # JOB LIST
     # ========================================================
 
     st.markdown(
-        '<div class="section-title">'
+        '<div class="section-header">'
         'Recommended opportunities'
-        '</div>',
-        unsafe_allow_html=True
-    )
-
-    st.markdown(
-        '<div class="section-subtitle">'
-        'Ranked from highest to lowest personalized match.'
         '</div>',
         unsafe_allow_html=True
     )
@@ -1181,9 +1131,7 @@ if st.button(
         start=1
     ):
 
-        with st.container(
-            border=True
-        ):
+        with st.container(border=True):
 
             left, right = st.columns(
                 [4, 1]
@@ -1193,15 +1141,21 @@ if st.button(
             with left:
 
                 st.markdown(
+                    f'<div class="job-number">'
+                    f'OPPORTUNITY {rank:02d}'
+                    f'</div>',
+                    unsafe_allow_html=True
+                )
+
+                st.markdown(
                     f'<div class="job-title">'
-                    f'{rank:02d} &nbsp; '
                     f'{job["Job Title"]}'
                     f'</div>',
                     unsafe_allow_html=True
                 )
 
                 st.markdown(
-                    f'<div class="company-name">'
+                    f'<div class="company">'
                     f'{job["Company"]}'
                     f'</div>',
                     unsafe_allow_html=True
@@ -1218,14 +1172,14 @@ if st.button(
             with right:
 
                 st.markdown(
-                    '<div class="small-label">'
+                    '<div class="match-label">'
                     'MATCH'
                     '</div>',
                     unsafe_allow_html=True
                 )
 
                 st.markdown(
-                    f'<div class="score">'
+                    f'<div class="match-score">'
                     f'{job["Final Score"] * 100:.1f}%'
                     f'</div>',
                     unsafe_allow_html=True
@@ -1239,117 +1193,88 @@ if st.button(
             )
 
 
-            # ------------------------------------------------
+            # =================================================
             # SKILLS
-            # ------------------------------------------------
+            # =================================================
 
-            skill_col1, skill_col2 = st.columns(2)
+            skill1, skill2 = st.columns(2)
 
 
-            with skill_col1:
+            with skill1:
 
-                st.markdown(
-                    '<div class="small-label">'
-                    'SKILLS YOU ALREADY HAVE'
-                    '</div>',
-                    unsafe_allow_html=True
+                st.caption(
+                    "SKILLS YOU ALREADY HAVE"
                 )
 
-                skill_chips(
+                display_chips(
                     job["Matched Skills"]
                 )
 
 
-            with skill_col2:
+            with skill2:
 
-                st.markdown(
-                    '<div class="small-label">'
-                    'SKILLS TO DEVELOP'
-                    '</div>',
-                    unsafe_allow_html=True
+                st.caption(
+                    "SKILLS TO DEVELOP"
                 )
 
-                skill_chips(
+                display_chips(
                     job["Skills to Develop"],
                     missing=True
                 )
 
 
-            # ------------------------------------------------
+            # =================================================
             # WHY THIS JOB
-            # ------------------------------------------------
+            # =================================================
 
             with st.expander(
                 "Why was this recommended?"
             ):
 
-                reasons = []
-
-
                 if job["Matched Skills"]:
 
-                    reasons.append(
-                        "Your current skills have "
-                        "similarity with the job requirements."
+                    st.write(
+                        "✓ Your skills have similarity "
+                        "with the job requirements."
                     )
-
 
                 if job["Industry Match"] == 1:
 
-                    reasons.append(
-                        "The industry matches "
-                        "your preference."
+                    st.write(
+                        "✓ Industry matches your preference."
                     )
-
 
                 if job["Experience Match"] == 1:
 
-                    reasons.append(
-                        "The experience level matches "
-                        "your profile."
+                    st.write(
+                        "✓ Experience level matches."
                     )
-
 
                 if job["Location Match"] == 1:
 
-                    reasons.append(
-                        "The location matches "
-                        "your preference."
+                    st.write(
+                        "✓ Location matches your preference."
                     )
-
 
                 if job["Salary Score"] >= 1:
 
-                    reasons.append(
-                        "The salary meets "
-                        "your minimum preference."
-                    )
-
-
-                for reason in reasons:
-
                     st.write(
-                        "✓ " + reason
+                        "✓ Salary meets your minimum preference."
                     )
 
 
-            # ------------------------------------------------
+            # =================================================
             # SCORE BREAKDOWN
-            # ------------------------------------------------
+            # =================================================
 
             with st.expander(
-                "View score breakdown"
+                "View recommendation score"
             ):
 
-                st.caption(
-                    "How this recommendation score was calculated."
-                )
+                c1, c2, c3, c4, c5 = st.columns(5)
 
 
-                b1, b2, b3, b4, b5 = st.columns(5)
-
-
-                with b1:
+                with c1:
 
                     st.metric(
                         "Skills",
@@ -1357,7 +1282,7 @@ if st.button(
                     )
 
 
-                with b2:
+                with c2:
 
                     st.metric(
                         "Industry",
@@ -1365,7 +1290,7 @@ if st.button(
                     )
 
 
-                with b3:
+                with c3:
 
                     st.metric(
                         "Experience",
@@ -1373,7 +1298,7 @@ if st.button(
                     )
 
 
-                with b4:
+                with c4:
 
                     st.metric(
                         "Location",
@@ -1381,7 +1306,7 @@ if st.button(
                     )
 
 
-                with b5:
+                with c5:
 
                     st.metric(
                         "Salary",
@@ -1390,22 +1315,22 @@ if st.button(
 
 
     # ========================================================
-    # CAREER GAP ANALYSIS
+    # SKILL GAP
     # ========================================================
 
     st.markdown("---")
 
     st.markdown(
-        '<div class="section-title">'
+        '<div class="section-header">'
         '🧠 Your career skill gap'
         '</div>',
         unsafe_allow_html=True
     )
 
     st.markdown(
-        '<div class="section-subtitle">'
-        'Skills that appear repeatedly across '
-        'your recommended opportunities.'
+        '<div class="section-description">'
+        'Skills that appear frequently across your '
+        'recommended opportunities.'
         '</div>',
         unsafe_allow_html=True
     )
@@ -1420,11 +1345,7 @@ if st.button(
             "Skills to Develop"
         ]:
 
-            skill = (
-                skill
-                .lower()
-                .strip()
-            )
+            skill = skill.lower().strip()
 
             if skill:
 
@@ -1466,12 +1387,10 @@ if st.button(
 
         with gap_left:
 
-            with st.container(
-                border=True
-            ):
+            with st.container(border=True):
 
-                st.markdown(
-                    "### Skills worth developing"
+                st.subheader(
+                    "Skills worth developing"
                 )
 
 
@@ -1485,8 +1404,7 @@ if st.button(
 
                     st.write(
                         f"**{skill.title()}** "
-                        f"· {count} of "
-                        f"{len(recommendations)} "
+                        f"· appears in {count} "
                         f"recommended jobs"
                     )
 
@@ -1498,53 +1416,43 @@ if st.button(
 
         with gap_right:
 
-            with st.container(
-                border=True
-            ):
+            with st.container(border=True):
 
-                st.markdown(
-                    "### ✦ Career insight"
+                st.subheader(
+                    "✦ Career insight"
                 )
 
 
-                top_gap = gap_df.iloc[0]["Skill"]
+                top_skill = (
+                    gap_df.iloc[0]["Skill"]
+                )
 
-                top_gap_count = int(
+                top_count = int(
                     gap_df.iloc[0]["Job Count"]
                 )
 
 
                 st.markdown(
                     f"""
-                    <div class="insight-box">
+<div class="insight">
 
-                        <div class="insight-title">
-                            Your next high-value skill
-                        </div>
+<b>Priority skill</b>
 
-                        <br>
+<br><br>
 
-                        <b>{top_gap.title()}</b>
+<span style="font-size:24px;">
+{top_skill.title()}
+</span>
 
-                        <br><br>
+<br><br>
 
-                        This skill appears in
-                        <b>{top_gap_count}</b>
-                        of your recommended opportunities.
+This skill appears in
+<b>{top_count}</b>
+of your recommended opportunities.
 
-                    </div>
-                    """,
+</div>
+""",
                     unsafe_allow_html=True
-                )
-
-
-                st.write("")
-
-
-                st.caption(
-                    "Prioritize skills that appear "
-                    "repeatedly across multiple "
-                    "target roles."
                 )
 
 
@@ -1563,17 +1471,8 @@ if st.button(
     st.markdown("---")
 
     st.markdown(
-        '<div class="section-title">'
-        'How your recommendation works'
-        '</div>',
-        unsafe_allow_html=True
-    )
-
-    st.markdown(
-        '<div class="section-subtitle">'
-        'A transparent recommendation pipeline '
-        'combining skill similarity with your '
-        'career preferences.'
+        '<div class="section-header">'
+        'How AI Career Navigator works'
         '</div>',
         unsafe_allow_html=True
     )
@@ -1584,37 +1483,29 @@ if st.button(
 
     with h1:
 
-        with st.container(
-            border=True
-        ):
+        with st.container(border=True):
+
+            st.markdown("### 01")
 
             st.markdown(
-                "### 01"
-            )
-
-            st.markdown(
-                "**Understand your profile**"
+                "**Build profile**"
             )
 
             st.caption(
                 "Your skills, experience, "
                 "industry, location and "
-                "salary preference are collected."
+                "salary preferences."
             )
 
 
     with h2:
 
-        with st.container(
-            border=True
-        ):
+        with st.container(border=True):
+
+            st.markdown("### 02")
 
             st.markdown(
-                "### 02"
-            )
-
-            st.markdown(
-                "**Compare your skills**"
+                "**Analyze skills**"
             )
 
             st.caption(
@@ -1626,42 +1517,34 @@ if st.button(
 
     with h3:
 
-        with st.container(
-            border=True
-        ):
+        with st.container(border=True):
 
-            st.markdown(
-                "### 03"
-            )
+            st.markdown("### 03")
 
             st.markdown(
                 "**Match preferences**"
             )
 
             st.caption(
-                "Industry, experience, location "
-                "and salary preferences "
+                "Industry, experience, "
+                "location and salary "
                 "contribute to the score."
             )
 
 
     with h4:
 
-        with st.container(
-            border=True
-        ):
+        with st.container(border=True):
+
+            st.markdown("### 04")
 
             st.markdown(
-                "### 04"
-            )
-
-            st.markdown(
-                "**Rank opportunities**"
+                "**Rank jobs**"
             )
 
             st.caption(
-                "Jobs are ranked using the "
-                "personalized final score."
+                "Opportunities are ranked "
+                "using the final personalized score."
             )
 
 
@@ -1674,33 +1557,33 @@ if st.button(
     ):
 
         st.markdown(
-            f"""
-            <div class="formula-box">
+            """
+<div class="formula">
 
-            <strong>Final Recommendation Score</strong>
+<strong>Final Recommendation Score</strong>
 
-            <br><br>
+<br><br>
 
-            0.50 × Skill Similarity
+0.50 × Skill Similarity
 
-            <br>
+<br>
 
-            + 0.20 × Industry Match
++ 0.20 × Industry Match
 
-            <br>
+<br>
 
-            + 0.15 × Experience Match
++ 0.15 × Experience Match
 
-            <br>
+<br>
 
-            + 0.10 × Location Match
++ 0.10 × Location Match
 
-            <br>
+<br>
 
-            + 0.05 × Salary Score
++ 0.05 × Salary Score
 
-            </div>
-            """,
+</div>
+""",
             unsafe_allow_html=True
         )
 
@@ -1710,24 +1593,20 @@ if st.button(
 # ============================================================
 
 st.markdown(
-    f"""
-    <div class="footer">
+    """
+<div class="footer">
 
-        <strong>AI Career Navigator</strong>
+<strong>AI Career Navigator</strong>
 
-        <br>
+<br><br>
 
-        Personalized career recommendation prototype
+Personalized career recommendation prototype
 
-        <br><br>
+<br><br>
 
-        Built with
-        <strong>Python</strong> ·
-        <strong>Streamlit</strong> ·
-        <strong>TF-IDF</strong> ·
-        <strong>Cosine Similarity</strong>
+Built with Python · Streamlit · TF-IDF · Cosine Similarity
 
-    </div>
-    """,
+</div>
+""",
     unsafe_allow_html=True
 )
