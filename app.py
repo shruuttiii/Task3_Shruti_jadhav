@@ -1,6 +1,5 @@
 import streamlit as st
 import pandas as pd
-import numpy as np
 import pickle
 from scipy.sparse import load_npz
 from sklearn.metrics.pairwise import cosine_similarity
@@ -19,220 +18,246 @@ st.set_page_config(
 
 
 # ============================================================
-# PREMIUM WARM EDITORIAL THEME
+# PALETTE
 # ============================================================
 
-st.markdown("""
+ALABASTER = "#EFE8DF"
+MAROON = "#7F0303"
+MIDNIGHT = "#0F414A"
+LIGHT_BLUE = "#96C0CE"
+TAN = "#D8BA98"
+
+DARK_TEXT = "#243338"
+MUTED_TEXT = "#667477"
+WHITE = "#FFFFFF"
+
+
+# ============================================================
+# CUSTOM UI
+# ============================================================
+
+st.markdown(
+    f"""
 <style>
 
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap');
+@import url(
+'https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap'
+);
 
 
-/* =========================================================
+/* ==========================================================
    GLOBAL
-   ========================================================= */
+   ========================================================== */
 
-html, body, [class*="css"] {
+html, body, [class*="css"] {{
     font-family: 'DM Sans', sans-serif;
-}
+}}
 
-.stApp {
+.stApp {{
+
     background:
         radial-gradient(
-            circle at 5% 5%,
-            rgba(196, 181, 253, 0.22),
-            transparent 24%
+            circle at 0% 0%,
+            rgba(150, 192, 206, 0.25),
+            transparent 28%
         ),
+
         radial-gradient(
-            circle at 95% 12%,
-            rgba(251, 146, 60, 0.12),
+            circle at 100% 10%,
+            rgba(216, 186, 152, 0.22),
             transparent 25%
         ),
-        radial-gradient(
-            circle at 50% 100%,
-            rgba(244, 114, 182, 0.10),
-            transparent 30%
-        ),
-        #f7f4ef;
 
-    color: #29252d;
-}
+        {ALABASTER};
 
-.block-container {
-    max-width: 1240px;
+    color: {DARK_TEXT};
+}}
+
+.block-container {{
+    max-width: 1220px;
     padding-top: 1.5rem;
     padding-bottom: 4rem;
-}
+}}
 
-header[data-testid="stHeader"] {
+header[data-testid="stHeader"] {{
     background: transparent;
-}
+}}
 
 
-/* =========================================================
+/* ==========================================================
    HERO
-   ========================================================= */
+   ========================================================== */
 
-.hero {
-    position: relative;
-    padding: 48px 25px 55px 25px;
+.hero {{
+    padding: 45px 20px 50px 20px;
     text-align: center;
-}
+}}
 
-.hero-badge {
+.hero-badge {{
+
     display: inline-block;
 
     padding: 8px 16px;
 
     border-radius: 999px;
 
-    background: #eee7ff;
+    background: {LIGHT_BLUE};
 
-    border: 1px solid #ddd0ff;
-
-    color: #6841b7;
+    color: {MIDNIGHT};
 
     font-size: 11px;
 
-    font-weight: 700;
+    font-weight: 800;
 
-    letter-spacing: 1.6px;
+    letter-spacing: 1.5px;
 
-    margin-bottom: 18px;
-}
+    margin-bottom: 20px;
+}}
 
-.hero-title {
+.hero-title {{
+
     font-family: 'Playfair Display', serif;
 
-    font-size: 58px;
+    font-size: 60px;
 
     line-height: 1.05;
 
     font-weight: 700;
 
+    color: {MIDNIGHT};
+
     margin: 0;
+}}
 
-    color: #2d2633;
-}
+.hero-title span {{
+    color: {MAROON};
+}}
 
-.hero-title span {
-    color: #7950c7;
-}
+.hero-subtitle {{
 
-.hero-subtitle {
     max-width: 720px;
 
-    margin: 18px auto 0 auto;
+    margin: 20px auto 0 auto;
 
-    color: #756e78;
+    color: {MUTED_TEXT};
 
     font-size: 16px;
 
     line-height: 1.75;
-}
+}}
 
 
-/* =========================================================
-   SECTION HEADERS
-   ========================================================= */
+/* ==========================================================
+   SECTION TITLES
+   ========================================================== */
 
-.section-title {
+.section-title {{
+
     font-family: 'Playfair Display', serif;
 
-    font-size: 28px;
+    font-size: 29px;
 
     font-weight: 700;
 
-    color: #302934;
+    color: {MIDNIGHT};
 
     margin-top: 25px;
 
     margin-bottom: 5px;
-}
+}}
 
-.section-subtitle {
-    color: #817984;
+.section-subtitle {{
+
+    color: {MUTED_TEXT};
 
     font-size: 14px;
 
     margin-bottom: 20px;
-}
+}}
 
 
-/* =========================================================
-   INPUT AREA
-   ========================================================= */
+/* ==========================================================
+   CONTAINERS / CARDS
+   ========================================================== */
 
-.profile-panel {
-    background: rgba(255,255,255,0.78);
+[data-testid="stVerticalBlockBorderWrapper"] {{
 
-    border: 1px solid #e8e1dc;
+    background: rgba(255,255,255,0.75);
 
-    border-radius: 24px;
+    border: 1px solid rgba(15,65,74,0.12) !important;
 
-    padding: 28px;
+    border-radius: 20px !important;
 
     box-shadow:
-        0 15px 45px rgba(65, 50, 70, 0.08);
-}
+        0 10px 30px rgba(15,65,74,0.07);
+
+    transition: all 0.2s ease;
+}}
+
+[data-testid="stVerticalBlockBorderWrapper"]:hover {{
+
+    box-shadow:
+        0 15px 38px rgba(15,65,74,0.12);
+
+    transform: translateY(-1px);
+}}
 
 
-/* Input labels */
+/* ==========================================================
+   INPUTS
+   ========================================================== */
 
-label {
-    color: #4a414d !important;
+label {{
 
-    font-weight: 650 !important;
-}
+    color: {MIDNIGHT} !important;
 
-
-/* Text input */
+    font-weight: 700 !important;
+}}
 
 .stTextInput input,
-.stNumberInput input {
+.stNumberInput input {{
 
-    background: #fffdfb !important;
+    background: {WHITE} !important;
 
-    border: 1px solid #ddd5d0 !important;
+    border: 1px solid #d6d2cc !important;
 
     border-radius: 12px !important;
 
-    color: #302934 !important;
-}
-
-
-/* Select boxes */
+    color: {DARK_TEXT} !important;
+}}
 
 .stSelectbox div[data-baseweb="select"],
-.stMultiSelect div[data-baseweb="select"] {
+.stMultiSelect div[data-baseweb="select"] {{
 
-    background: #fffdfb !important;
+    background: {WHITE} !important;
 
-    border: 1px solid #ddd5d0 !important;
+    border: 1px solid #d6d2cc !important;
 
     border-radius: 12px !important;
 
-    color: #302934 !important;
-}
+    color: {DARK_TEXT} !important;
+}}
 
 
-/* Multiselect chips */
+/* Multiselect tags */
 
-.stMultiSelect span[data-baseweb="tag"] {
+.stMultiSelect span[data-baseweb="tag"] {{
 
-    background: #eee7ff !important;
+    background: {LIGHT_BLUE} !important;
 
-    border: 1px solid #d8c9ff !important;
+    border: none !important;
 
-    color: #6240a9 !important;
-}
+    color: {MIDNIGHT} !important;
+
+    font-weight: 600;
+}}
 
 
-/* =========================================================
-   BUTTON
-   ========================================================= */
+/* ==========================================================
+   MAIN BUTTON
+   ========================================================== */
 
-.stButton > button {
+.stButton > button {{
 
     width: 100%;
 
@@ -245,58 +270,43 @@ label {
     background:
         linear-gradient(
             100deg,
-            #7045b8,
-            #9568d3,
-            #e57c67
+            {MAROON},
+            #9d1b1b
         );
 
     color: white;
 
     font-size: 15px;
 
-    font-weight: 700;
+    font-weight: 800;
 
     box-shadow:
-        0 12px 25px rgba(112,69,184,0.20);
+        0 12px 25px rgba(127,3,3,0.20);
 
     transition: all 0.25s ease;
-}
+}}
 
-.stButton > button:hover {
+.stButton > button:hover {{
+
+    background:
+        linear-gradient(
+            100deg,
+            #650000,
+            {MAROON}
+        );
 
     transform: translateY(-2px);
 
     box-shadow:
-        0 16px 32px rgba(112,69,184,0.28);
-}
+        0 16px 30px rgba(127,3,3,0.28);
+}}
 
 
-/* =========================================================
+/* ==========================================================
    SKILL CHIPS
-   ========================================================= */
+   ========================================================== */
 
-.skill-chip {
-
-    display: inline-block;
-
-    padding: 7px 13px;
-
-    margin: 4px 5px 4px 0;
-
-    border-radius: 999px;
-
-    background: #eee7ff;
-
-    border: 1px solid #d8c9ff;
-
-    color: #6742aa;
-
-    font-size: 12px;
-
-    font-weight: 650;
-}
-
-.missing-chip {
+.skill-chip {{
 
     display: inline-block;
 
@@ -306,112 +316,71 @@ label {
 
     border-radius: 999px;
 
-    background: #fff0e7;
+    background: {LIGHT_BLUE};
 
-    border: 1px solid #ffd4bd;
-
-    color: #bd633d;
+    color: {MIDNIGHT};
 
     font-size: 12px;
 
-    font-weight: 650;
-}
+    font-weight: 700;
+}}
+
+.missing-chip {{
+
+    display: inline-block;
+
+    padding: 7px 13px;
+
+    margin: 4px 5px 4px 0;
+
+    border-radius: 999px;
+
+    background: {TAN};
+
+    color: {MAROON};
+
+    font-size: 12px;
+
+    font-weight: 700;
+}}
 
 
-/* =========================================================
-   METRICS
-   ========================================================= */
+/* ==========================================================
+   JOB TITLES
+   ========================================================== */
 
-[data-testid="stMetric"] {
-
-    background: rgba(255,255,255,0.82);
-
-    border: 1px solid #e7dfda;
-
-    border-radius: 16px;
-
-    padding: 18px;
-
-    box-shadow:
-        0 8px 25px rgba(60,45,55,0.06);
-}
-
-[data-testid="stMetricLabel"] {
-
-    color: #847a85 !important;
-
-    font-size: 12px !important;
-}
-
-[data-testid="stMetricValue"] {
-
-    color: #342c38 !important;
-
-    font-weight: 750 !important;
-}
-
-
-/* =========================================================
-   CARDS
-   ========================================================= */
-
-[data-testid="stVerticalBlockBorderWrapper"] {
-
-    background: rgba(255,255,255,0.82);
-
-    border: 1px solid #e7dfda !important;
-
-    border-radius: 20px !important;
-
-    box-shadow:
-        0 10px 32px rgba(65,50,70,0.06);
-
-    transition: all 0.2s ease;
-}
-
-[data-testid="stVerticalBlockBorderWrapper"]:hover {
-
-    box-shadow:
-        0 15px 40px rgba(65,50,70,0.10);
-}
-
-
-/* =========================================================
-   JOB TITLE
-   ========================================================= */
-
-.job-title {
+.job-title {{
 
     font-size: 20px;
 
-    font-weight: 750;
+    font-weight: 800;
 
-    color: #342b38;
-}
+    color: {MIDNIGHT};
+}}
 
-.company-name {
+.company-name {{
 
-    color: #7950c7;
+    color: {MAROON};
 
     font-size: 14px;
 
     margin-top: 4px;
 
-    font-weight: 600;
-}
+    font-weight: 700;
+}}
 
-.score {
+.score {{
 
     font-size: 30px;
 
     font-weight: 800;
 
-    color: #7045b8;
-}
+    color: {MAROON};
+}}
 
-.small-label {
+.small-label {{
 
-    color: #938895;
+    color: {MUTED_TEXT};
 
     font-size: 10px;
 
@@ -419,138 +388,168 @@ label {
 
     letter-spacing: 1.3px;
 
-    font-weight: 750;
-}
+    font-weight: 800;
+}}
 
 
-/* =========================================================
-   PROGRESS
-   ========================================================= */
+/* ==========================================================
+   METRICS
+   ========================================================== */
 
-.stProgress > div > div > div > div {
+[data-testid="stMetric"] {{
+
+    background: rgba(255,255,255,0.78);
+
+    border: 1px solid rgba(15,65,74,0.12);
+
+    border-radius: 16px;
+
+    padding: 18px;
+
+    box-shadow:
+        0 7px 22px rgba(15,65,74,0.06);
+}}
+
+[data-testid="stMetricLabel"] {{
+
+    color: {MUTED_TEXT} !important;
+
+    font-size: 12px !important;
+}}
+
+[data-testid="stMetricValue"] {{
+
+    color: {MIDNIGHT} !important;
+
+    font-weight: 800 !important;
+}}
+
+
+/* ==========================================================
+   PROGRESS BAR
+   ========================================================== */
+
+.stProgress > div > div > div > div {{
 
     background:
         linear-gradient(
             90deg,
-            #7650c4,
-            #c17ed8,
-            #e98570
+            {MAROON},
+            {TAN},
+            {LIGHT_BLUE}
         );
-}
+}}
 
 
-/* =========================================================
+/* ==========================================================
    EXPANDERS
-   ========================================================= */
+   ========================================================== */
 
-.streamlit-expanderHeader {
+[data-testid="stExpander"] {{
 
-    color: #4c424e !important;
+    border-color: rgba(15,65,74,0.14) !important;
 
-    font-weight: 650;
-}
+    background: rgba(255,255,255,0.45);
+}}
 
-[data-testid="stExpander"] {
+.streamlit-expanderHeader {{
 
-    border-color: #e7dfda !important;
+    color: {MIDNIGHT} !important;
 
-    background: rgba(255,255,255,0.55);
-}
+    font-weight: 700;
+}}
 
 
-/* =========================================================
-   INSIGHT BOX
-   ========================================================= */
+/* ==========================================================
+   CAREER INSIGHT
+   ========================================================== */
 
-.insight-box {
+.insight-box {{
 
     background:
         linear-gradient(
             135deg,
-            #f0eaff,
-            #fff1eb
+            rgba(150,192,206,0.42),
+            rgba(216,186,152,0.35)
         );
 
-    border: 1px solid #dfd2f5;
+    border-left: 5px solid {MAROON};
 
-    border-radius: 18px;
+    border-radius: 15px;
 
-    padding: 22px;
+    padding: 20px;
 
-    margin-top: 8px;
-}
+    color: {MIDNIGHT};
+}}
 
-.insight-title {
+.insight-title {{
 
-    color: #57358d;
-
-    font-weight: 750;
+    color: {MAROON};
 
     font-size: 16px;
-}
+
+    font-weight: 800;
+}}
 
 
-/* =========================================================
+/* ==========================================================
    FORMULA
-   ========================================================= */
+   ========================================================== */
 
-.formula-box {
+.formula-box {{
 
-    background: #2f2734;
+    background: {MIDNIGHT};
 
-    color: #f9f5ff;
+    color: #f8f4ef;
 
     border-radius: 18px;
 
     padding: 25px;
 
-    margin-top: 10px;
-
     line-height: 2;
-}
+}}
 
-.formula-box strong {
+.formula-box strong {{
+    color: {TAN};
+}}
 
-    color: #d9c5ff;
-}
 
-
-/* =========================================================
+/* ==========================================================
    FOOTER
-   ========================================================= */
+   ========================================================== */
 
-.footer {
+.footer {{
 
     text-align: center;
 
     padding: 45px 0 10px 0;
 
-    color: #9a919b;
+    color: #8b9292;
 
     font-size: 12px;
-}
+}}
 
-.footer strong {
+.footer strong {{
+    color: {MIDNIGHT};
+}}
 
-    color: #6e6570;
-}
 
-
-/* =========================================================
+/* ==========================================================
    DIVIDER
-   ========================================================= */
+   ========================================================== */
 
-hr {
-
-    border-color: #e7dfda !important;
-}
+hr {{
+    border-color: rgba(15,65,74,0.13) !important;
+}}
 
 </style>
-""", unsafe_allow_html=True)
+""",
+    unsafe_allow_html=True
+)
 
 
 # ============================================================
-# LOAD MODEL
+# LOAD MODEL FILES
 # ============================================================
 
 @st.cache_resource
@@ -585,10 +584,13 @@ except Exception as e:
 
 
 # ============================================================
-# HELPER FUNCTIONS
+# SKILL MATCHING
 # ============================================================
 
-def get_skill_match(user_skills, job_skills):
+def get_skill_match(
+    user_skills,
+    job_skills
+):
 
     user_skills = set(
         skill.lower().strip()
@@ -615,7 +617,9 @@ def get_skill_match(user_skills, job_skills):
 
 # ============================================================
 # RECOMMENDATION ENGINE
-# SAME MODEL / SAME WEIGHTS
+# ============================================================
+# IMPORTANT:
+# THIS IS THE SAME MODEL LOGIC AS BEFORE.
 # ============================================================
 
 def recommend_jobs(
@@ -648,7 +652,9 @@ def recommend_jobs(
 
     results = df_model.copy()
 
-    results["Skill Similarity"] = skill_scores
+    results["Skill Similarity"] = (
+        skill_scores
+    )
 
     results["Industry Match"] = (
         results["Industry"].str.lower()
@@ -669,7 +675,9 @@ def recommend_jobs(
         results["Salary"] / min_salary
     ).clip(upper=1)
 
-    # EXACT SAME RECOMMENDATION FORMULA
+    # ========================================================
+    # SAME FINAL SCORE
+    # ========================================================
 
     results["Final Score"] = (
 
@@ -749,7 +757,6 @@ def recommend_jobs(
 
             "Skills to Develop":
                 missing
-
         })
 
     return pd.DataFrame(
@@ -758,7 +765,7 @@ def recommend_jobs(
 
 
 # ============================================================
-# SKILL CHIP FUNCTION
+# SKILL CHIP DISPLAY
 # ============================================================
 
 def skill_chips(
@@ -800,29 +807,33 @@ def skill_chips(
 # HERO
 # ============================================================
 
-st.markdown("""
+st.markdown(
+    """
 <div class="hero">
 
-<div class="hero-badge">
-✦ AI-POWERED CAREER INTELLIGENCE
-</div>
+    <div class="hero-badge">
+        ✦ AI-POWERED CAREER INTELLIGENCE
+    </div>
 
-<div class="hero-title">
-Find work that <span>fits you.</span>
-</div>
+    <div class="hero-title">
+        Find work that <span>fits you.</span>
+    </div>
 
-<div class="hero-subtitle">
-AI Career Navigator analyzes your skills, experience,
-industry interests, location and salary preferences
-to discover personalized career opportunities.
-</div>
+    <div class="hero-subtitle">
+        AI Career Navigator analyzes your skills,
+        experience, industry interests, location and
+        salary preferences to discover personalized
+        career opportunities.
+    </div>
 
 </div>
-""", unsafe_allow_html=True)
+""",
+    unsafe_allow_html=True
+)
 
 
 # ============================================================
-# PROFILE SECTION
+# PROFILE
 # ============================================================
 
 st.markdown(
@@ -835,7 +846,7 @@ st.markdown(
 st.markdown(
     '<div class="section-subtitle">'
     'Tell us what you are looking for. '
-    'We will handle the matching.'
+    'Our recommendation engine will do the matching.'
     '</div>',
     unsafe_allow_html=True
 )
@@ -854,12 +865,14 @@ with st.container(
 
         skills_input = st.multiselect(
             "Your Skills",
+
             options=sorted(
                 list(
                     vectorizer
                     .get_feature_names_out()
                 )
             ),
+
             default=[
                 skill
                 for skill in [
@@ -868,13 +881,14 @@ with st.container(
                     "machine learning"
                 ]
                 if skill in
-                vectorizer.get_feature_names_out()
-            ],
-            help="Select the skills you already have."
+                vectorizer
+                .get_feature_names_out()
+            ]
         )
 
         experience = st.selectbox(
             "Experience Level",
+
             sorted(
                 df_model[
                     "Experience Level"
@@ -886,6 +900,7 @@ with st.container(
 
         industry = st.selectbox(
             "Preferred Industry",
+
             sorted(
                 df_model[
                     "Industry"
@@ -899,6 +914,7 @@ with st.container(
 
         location = st.selectbox(
             "Preferred Location",
+
             sorted(
                 df_model[
                     "Location"
@@ -910,15 +926,21 @@ with st.container(
 
         min_salary = st.number_input(
             "Minimum Salary Preference",
+
             min_value=0,
+
             value=80000,
+
             step=5000
         )
 
         top_n = st.slider(
             "Recommendations to show",
+
             min_value=3,
+
             max_value=15,
+
             value=10
         )
 
@@ -1000,7 +1022,8 @@ if st.button(
 
     st.markdown(
         '<div class="section-subtitle">'
-        'Your profile has been compared against the available opportunities.'
+        'Your profile has been compared against '
+        'the available opportunities.'
         '</div>',
         unsafe_allow_html=True
     )
@@ -1033,12 +1056,14 @@ if st.button(
 
     m1, m2, m3, m4 = st.columns(4)
 
+
     with m1:
 
         st.metric(
             "Jobs matched",
             matching_jobs
         )
+
 
     with m2:
 
@@ -1047,12 +1072,14 @@ if st.button(
             f"{avg_score:.1f}%"
         )
 
+
     with m3:
 
         st.metric(
             "Best match",
             f"{best_score:.1f}%"
         )
+
 
     with m4:
 
@@ -1131,7 +1158,7 @@ if st.button(
 
 
     # ========================================================
-    # RECOMMENDATIONS
+    # RECOMMENDED JOBS
     # ========================================================
 
     st.markdown(
@@ -1162,11 +1189,13 @@ if st.button(
                 [4, 1]
             )
 
+
             with left:
 
                 st.markdown(
                     f'<div class="job-title">'
-                    f'{rank:02d} &nbsp; {job["Job Title"]}'
+                    f'{rank:02d} &nbsp; '
+                    f'{job["Job Title"]}'
                     f'</div>',
                     unsafe_allow_html=True
                 )
@@ -1184,6 +1213,7 @@ if st.button(
                     f'•  🏢 {job["Industry"]}  '
                     f'•  💰 {job["Salary"]:,.0f}'
                 )
+
 
             with right:
 
@@ -1209,14 +1239,12 @@ if st.button(
             )
 
 
-            skill_col1, skill_col2 = st.columns(
-                2
-            )
-
-
             # ------------------------------------------------
-            # MATCHING SKILLS
+            # SKILLS
             # ------------------------------------------------
+
+            skill_col1, skill_col2 = st.columns(2)
+
 
             with skill_col1:
 
@@ -1231,10 +1259,6 @@ if st.button(
                     job["Matched Skills"]
                 )
 
-
-            # ------------------------------------------------
-            # SKILL GAPS
-            # ------------------------------------------------
 
             with skill_col2:
 
@@ -1321,7 +1345,9 @@ if st.button(
                     "How this recommendation score was calculated."
                 )
 
+
                 b1, b2, b3, b4, b5 = st.columns(5)
+
 
                 with b1:
 
@@ -1330,12 +1356,14 @@ if st.button(
                         f'{job["Skill Similarity"] * 100:.1f}%'
                     )
 
+
                 with b2:
 
                     st.metric(
                         "Industry",
                         f'{job["Industry Match"] * 100:.0f}%'
                     )
+
 
                 with b3:
 
@@ -1344,12 +1372,14 @@ if st.button(
                         f'{job["Experience Match"] * 100:.0f}%'
                     )
 
+
                 with b4:
 
                     st.metric(
                         "Location",
                         f'{job["Location Match"] * 100:.0f}%'
                     )
+
 
                 with b5:
 
@@ -1374,7 +1404,8 @@ if st.button(
 
     st.markdown(
         '<div class="section-subtitle">'
-        'Skills that appear repeatedly across your recommended opportunities.'
+        'Skills that appear repeatedly across '
+        'your recommended opportunities.'
         '</div>',
         unsafe_allow_html=True
     )
@@ -1443,6 +1474,7 @@ if st.button(
                     "### Skills worth developing"
                 )
 
+
                 for _, row in gap_df.iterrows():
 
                     skill = row["Skill"]
@@ -1474,41 +1506,45 @@ if st.button(
                     "### ✦ Career insight"
                 )
 
+
                 top_gap = gap_df.iloc[0]["Skill"]
 
                 top_gap_count = int(
                     gap_df.iloc[0]["Job Count"]
                 )
 
+
                 st.markdown(
                     f"""
                     <div class="insight-box">
 
-                    <div class="insight-title">
-                    Your next high-value skill
-                    </div>
+                        <div class="insight-title">
+                            Your next high-value skill
+                        </div>
 
-                    <br>
+                        <br>
 
-                    <b>{top_gap.title()}</b>
+                        <b>{top_gap.title()}</b>
 
-                    <br><br>
+                        <br><br>
 
-                    This skill appears in
-                    <b>{top_gap_count}</b>
-                    of your recommended opportunities.
+                        This skill appears in
+                        <b>{top_gap_count}</b>
+                        of your recommended opportunities.
 
                     </div>
                     """,
                     unsafe_allow_html=True
                 )
 
+
                 st.write("")
 
+
                 st.caption(
-                    "Prioritizing frequently requested "
-                    "skills can help you prepare for "
-                    "more of your target roles."
+                    "Prioritize skills that appear "
+                    "repeatedly across multiple "
+                    "target roles."
                 )
 
 
@@ -1516,7 +1552,7 @@ if st.button(
 
         st.success(
             "🎉 Your current skills already cover "
-            "the requirements of your recommended opportunities."
+            "the requirements of your recommended jobs."
         )
 
 
@@ -1535,8 +1571,9 @@ if st.button(
 
     st.markdown(
         '<div class="section-subtitle">'
-        'A transparent recommendation pipeline combining '
-        'skill similarity with your career preferences.'
+        'A transparent recommendation pipeline '
+        'combining skill similarity with your '
+        'career preferences.'
         '</div>',
         unsafe_allow_html=True
     )
@@ -1624,7 +1661,7 @@ if st.button(
 
             st.caption(
                 "Jobs are ranked using the "
-                "personalized final recommendation score."
+                "personalized final score."
             )
 
 
@@ -1637,7 +1674,7 @@ if st.button(
     ):
 
         st.markdown(
-            """
+            f"""
             <div class="formula-box">
 
             <strong>Final Recommendation Score</strong>
@@ -1673,22 +1710,22 @@ if st.button(
 # ============================================================
 
 st.markdown(
-    """
+    f"""
     <div class="footer">
 
-    AI Career Navigator
+        <strong>AI Career Navigator</strong>
 
-    <br>
+        <br>
 
-    Personalized career recommendation prototype
+        Personalized career recommendation prototype
 
-    <br><br>
+        <br><br>
 
-    Built with
-    <strong>Python</strong> ·
-    <strong>Streamlit</strong> ·
-    <strong>TF-IDF</strong> ·
-    <strong>Cosine Similarity</strong>
+        Built with
+        <strong>Python</strong> ·
+        <strong>Streamlit</strong> ·
+        <strong>TF-IDF</strong> ·
+        <strong>Cosine Similarity</strong>
 
     </div>
     """,
